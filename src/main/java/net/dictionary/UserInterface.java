@@ -1,4 +1,4 @@
-package org.dictionary;
+package net.dictionary;
 
 import javafx.application.*;
 import javafx.geometry.*;
@@ -8,15 +8,14 @@ import javafx.scene.layout.*;
 import javafx.stage.*;
 
 public class UserInterface extends Application {
-    private Dictionary dictionary;
-
-    @Override
-    public void init() throws Exception {
-        this.dictionary = new Dictionary();
-    }
+    private String databasePath;
+    private DictionaryDao dictionary;
 
     @Override
     public void start(Stage stage) throws Exception {
+        databasePath = "jdbc:h2:~/dictionary_db";
+        dictionary = new DictionaryDao(databasePath);
+
         BorderPane layout = new BorderPane();
 
         HBox menu = new HBox();
@@ -45,7 +44,7 @@ public class UserInterface extends Application {
     }
 
     public static void main(String[] args) {
-        launch(UserInterface.class);
+        launch(args);
     }
 
 }

@@ -1,17 +1,23 @@
-package org.dictionary;
+package net.dictionary;
 
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+import java.sql.SQLException;
+
 public class PractiseView {
-    private Dictionary dictionary;
+    private DictionaryDao dictionary;
     private String word;
 
-    public PractiseView(Dictionary dictionary) {
+    public PractiseView(DictionaryDao dictionary) throws SQLException {
         this.dictionary = dictionary;
         this.word = dictionary.getRandomWord();
+    }
+
+    private String generateRandomWord() throws SQLException {
+        return dictionary.getRandomWord();
     }
 
     public Parent getView() {
@@ -25,7 +31,7 @@ public class PractiseView {
         Label wordInstruction = new Label("Translate the word: "+this.word);
         TextField translationField = new TextField();
         Button checkWord = new Button("Check");
-        Label feedback = new Label();
+        Label feedback = new Label("");
 
         layout.add(wordInstruction, 0, 0);
         layout.add(translationField, 0, 1);
@@ -34,15 +40,20 @@ public class PractiseView {
 
         checkWord.setOnMouseClicked((event) -> {
             String translation = translationField.getText();
-            if (dictionary.getTranslation(word).equals(translation)) {
-                feedback.setText("Correct!");
-            } else {
-                feedback.setText("Wrong! Correct translation for the word '"+word+"' is '"+dictionary.getTranslation(word)+"'");
-                return;
+            try {
+                if (dictionary.getLatvianWord(word).equals(translation)) {
+                    feedback.setText("Correct!");
+                } else {
+                    feedback.setText("Wrong! Correct translation for the word '"+word+"' is '"+ dictionary.getLatvianWord(word)+"'");
+                    return;
+                }
+
+                word = generateRandomWord();
+                wordInstruction.setText("Translate the word: " + word);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
-            this.word = this.dictionary.getRandomWord();
-            wordInstruction.setText("Translate the word: "+this.word);
             translationField.clear();
         });
 

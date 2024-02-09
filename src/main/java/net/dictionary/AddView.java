@@ -1,14 +1,16 @@
-package org.dictionary;
+package net.dictionary;
 
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-public class AddView {
-    private Dictionary dictionary;
+import java.sql.SQLException;
 
-    public AddView(Dictionary dictionary) {
+public class AddView {
+    private DictionaryDao dictionary;
+
+    public AddView(DictionaryDao dictionary) {
         this.dictionary = dictionary;
     }
 
@@ -36,7 +38,11 @@ public class AddView {
             String word = wordField.getText();
             String translation = translationField.getText();
 
-            dictionary.addTranslation(word, translation);
+            try {
+                dictionary.addTranslation(new Pair(word, translation));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             wordField.clear();
             translationField.clear();
