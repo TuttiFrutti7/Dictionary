@@ -23,10 +23,10 @@ public class UserInterface extends Application {
         menu.setPadding(new Insets(10, 10, 10, 10));
 
         Button addButton = new Button("Add new word");
-        Button practiceButton = new Button("Practise memory");
+        Button practiseButton = new Button("Practise memory");
         Button dictionaryButton = new Button("View dictionary");
 
-        menu.getChildren().addAll(addButton, practiceButton, dictionaryButton);
+        menu.getChildren().addAll(addButton, practiseButton, dictionaryButton);
         layout.setTop(menu);
 
         AddView addView = new AddView(dictionary);
@@ -34,7 +34,7 @@ public class UserInterface extends Application {
         WordsView wordsView = new WordsView(dictionary);
 
         addButton.setOnAction((event) -> layout.setCenter(addView.getView()));
-        practiceButton.setOnAction((event) -> layout.setCenter(practiseView.getView()));
+        practiseButton.setOnAction((event) -> layout.setCenter(practiseView.getView()));
         dictionaryButton.setOnAction((event) -> layout.setCenter(wordsView.getView()));
 
         layout.setCenter(addView.getView());

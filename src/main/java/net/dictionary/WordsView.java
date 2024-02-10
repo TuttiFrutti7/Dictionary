@@ -30,6 +30,7 @@ public class WordsView {
             List<Pair> words = this.dictionary.getWordList();
             ListView<String> englishWords = new ListView();
             ListView<String> latvianWords = new ListView();
+
             for (Pair pair : words) {
                 englishWords.getItems().add(pair.getEnglishWord());
                 latvianWords.getItems().add(pair.getLatvianWord());

@@ -73,7 +73,7 @@ public class DictionaryDao {
     public List<Pair> getWordList() throws SQLException {
         List<Pair> wordList = new ArrayList<>();
         try (Connection conn = createConnectionAndEnsureDatabase();
-            ResultSet results = conn.prepareStatement("SELECT * FROM Dictionary").executeQuery()) {
+            ResultSet results = conn.prepareStatement("SELECT * FROM Dictionary ORDER BY englishWord").executeQuery()) {
             while (results.next()) {
                 wordList.add(new Pair(results.getString("englishWord"), results.getString("latvianWord")));
             }

@@ -44,7 +44,7 @@ public class PractiseView {
         layout.add(translationField, 0, 1);
         layout.add(checkWord, 0, 2);
         layout.add(feedback, 0, 3);
-        layout.add(changeOrder, 0, 5);
+        layout.add(changeOrder, 0, 6);
 
         checkWord.setOnAction((event) -> {
             String translation = translationField.getText();
