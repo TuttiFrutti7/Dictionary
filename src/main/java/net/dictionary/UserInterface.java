@@ -33,9 +33,9 @@ public class UserInterface extends Application {
         PractiseView practiseView = new PractiseView(dictionary);
         WordsView wordsView = new WordsView(dictionary);
 
-        addButton.setOnMouseClicked((event) -> layout.setCenter(addView.getView()));
-        practiceButton.setOnMouseClicked((event) -> layout.setCenter(practiseView.getView()));
-        dictionaryButton.setOnMouseClicked((event) -> layout.setCenter(wordsView.getView()));
+        addButton.setOnAction((event) -> layout.setCenter(addView.getView()));
+        practiceButton.setOnAction((event) -> layout.setCenter(practiseView.getView()));
+        dictionaryButton.setOnAction((event) -> layout.setCenter(wordsView.getView()));
 
         layout.setCenter(addView.getView());
 

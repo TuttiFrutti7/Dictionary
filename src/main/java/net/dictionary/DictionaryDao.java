@@ -81,13 +81,13 @@ public class DictionaryDao {
         return wordList;
     }
 
-    public String getRandomWord() throws SQLException {
+    public String getRandomWord(String language) throws SQLException {
         try (Connection conn = createConnectionAndEnsureDatabase()) {
-            PreparedStatement stmt = conn.prepareStatement("SELECT englishWord FROM Dictionary ORDER BY RAND() LIMIT 1");
+            PreparedStatement stmt = conn.prepareStatement("SELECT "+language+" FROM Dictionary ORDER BY RAND() LIMIT 1");
             ResultSet resultSet = stmt.executeQuery();
 
             if (resultSet.next()) {
-                return resultSet.getString("englishWord");
+                return resultSet.getString(language);
             } else {
                 return "No words found";
             }

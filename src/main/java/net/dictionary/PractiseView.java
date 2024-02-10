@@ -10,14 +10,20 @@ import java.sql.SQLException;
 public class PractiseView {
     private DictionaryDao dictionary;
     private String word;
+    private String language;
 
     public PractiseView(DictionaryDao dictionary) throws SQLException {
         this.dictionary = dictionary;
-        this.word = dictionary.getRandomWord();
+        this.language = "englishWord";
+        this.word = dictionary.getRandomWord("englishWord");
     }
 
-    private String generateRandomWord() throws SQLException {
-        return dictionary.getRandomWord();
+    private String generateRandomWord(String language) throws SQLException {
+        return dictionary.getRandomWord(language);
+    }
+
+    private String getTranslation(String word) throws SQLException {
+        return (language.equals("englishWord")) ? dictionary.getLatvianWord(word) : dictionary.getEnglishWord(word);
     }
 
     public Parent getView() {
@@ -40,17 +46,17 @@ public class PractiseView {
         layout.add(feedback, 0, 3);
         layout.add(changeOrder, 0, 5);
 
-        checkWord.setOnMouseClicked((event) -> {
+        checkWord.setOnAction((event) -> {
             String translation = translationField.getText();
             try {
-                if (dictionary.getLatvianWord(word).equals(translation)) {
+                if (getTranslation(word).equals(translation)) {
                     feedback.setText("Correct!");
                 } else {
-                    feedback.setText("Wrong! Correct translation for the word '"+word+"' is '"+ dictionary.getLatvianWord(word)+"'");
+                    feedback.setText("Wrong! Correct translation for the word '"+word+"' is '"+ getTranslation(word)+"'");
                     return;
                 }
 
-                word = generateRandomWord();
+                word = generateRandomWord(language);
                 wordInstruction.setText("Translate the word: " + word);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -59,7 +65,15 @@ public class PractiseView {
             translationField.clear();
         });
 
-        changeOrder.setOnMouseClicked((event) -> {
+        changeOrder.setOnAction((event) -> {
+            language = (language.equals("englishWord")) ? "latvianWord" : "englishWord";
+
+            try {
+                word = generateRandomWord(language);
+                wordInstruction.setText("Translate the word: " + word);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
 
         return layout;

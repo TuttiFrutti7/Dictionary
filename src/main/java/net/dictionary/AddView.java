@@ -37,7 +37,7 @@ public class AddView {
         layout.add(addPair, 0, 2);
         layout.add(removePair, 0, 3);
 
-        addPair.setOnMouseClicked((event) -> {
+        addPair.setOnAction((event) -> {
             String word = wordField.getText();
             String translation = translationField.getText();
 
@@ -51,7 +51,7 @@ public class AddView {
             translationField.clear();
         });
 
-        removePair.setOnMouseClicked((event) -> {
+        removePair.setOnAction((event) -> {
             String word = wordField.getText();
             String translation = translationField.getText();
 
