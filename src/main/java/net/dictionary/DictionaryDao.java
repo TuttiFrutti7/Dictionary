@@ -2,6 +2,7 @@ package net.dictionary;
 
 
 import java.sql.*;
+import java.util.*;
 
 public class DictionaryDao {
     private String databasePath;
@@ -43,6 +44,17 @@ public class DictionaryDao {
                 return "No words found";
             }
         }
+    }
+
+    public List<Pair> getWordList() throws SQLException {
+        List<Pair> wordList = new ArrayList<>();
+        try (Connection conn = createConnectionAndEnsureDatabase();
+            ResultSet results = conn.prepareStatement("SELECT * FROM Dictionary").executeQuery()) {
+            while (results.next()) {
+                wordList.add(new Pair(results.getString("englishWord"), results.getString("latvianWord")));
+            }
+        }
+        return wordList;
     }
 
     public String getRandomWord() throws SQLException {

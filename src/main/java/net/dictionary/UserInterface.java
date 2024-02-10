@@ -24,15 +24,18 @@ public class UserInterface extends Application {
 
         Button addButton = new Button("Add new word");
         Button practiceButton = new Button("Practise memory");
+        Button dictionaryButton = new Button("View dictionary");
 
-        menu.getChildren().addAll(addButton, practiceButton);
+        menu.getChildren().addAll(addButton, practiceButton, dictionaryButton);
         layout.setTop(menu);
 
         AddView addView = new AddView(dictionary);
         PractiseView practiseView = new PractiseView(dictionary);
+        WordsView wordsView = new WordsView(dictionary);
 
         addButton.setOnMouseClicked((event) -> layout.setCenter(addView.getView()));
         practiceButton.setOnMouseClicked((event) -> layout.setCenter(practiseView.getView()));
+        dictionaryButton.setOnMouseClicked((event) -> layout.setCenter(wordsView.getView()));
 
         layout.setCenter(addView.getView());
 
