@@ -32,11 +32,13 @@ public class PractiseView {
         TextField translationField = new TextField();
         Button checkWord = new Button("Check");
         Label feedback = new Label("");
+        Button changeOrder = new Button("Change language");
 
         layout.add(wordInstruction, 0, 0);
         layout.add(translationField, 0, 1);
         layout.add(checkWord, 0, 2);
         layout.add(feedback, 0, 3);
+        layout.add(changeOrder, 0, 5);
 
         checkWord.setOnMouseClicked((event) -> {
             String translation = translationField.getText();
@@ -55,6 +57,9 @@ public class PractiseView {
             }
 
             translationField.clear();
+        });
+
+        changeOrder.setOnMouseClicked((event) -> {
         });
 
         return layout;

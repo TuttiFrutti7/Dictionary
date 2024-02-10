@@ -31,6 +31,15 @@ public class DictionaryDao {
         }
     }
 
+    public void removeTranslation(String englishWord, String translation) throws SQLException {
+        try (Connection conn = createConnectionAndEnsureDatabase()) {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM Dictionary WHERE englishWord = ? AND latvianWord = ?");
+            stmt.setString(1, englishWord);
+            stmt.setString(2, translation);
+            stmt.executeUpdate();
+        }
+    }
+
     public String getLatvianWord(String englishWord) throws SQLException {
         try (Connection conn = createConnectionAndEnsureDatabase()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT latvianWord from Dictionary WHERE englishWord = ?");
@@ -40,6 +49,21 @@ public class DictionaryDao {
 
             if (resultSet.next()) {
                 return resultSet.getString("latvianWord");
+            } else {
+                return "No words found";
+            }
+        }
+    }
+
+    public String getEnglishWord(String latvianWord) throws SQLException {
+        try (Connection conn = createConnectionAndEnsureDatabase()) {
+            PreparedStatement stmt = conn.prepareStatement("SELECT englishWord from Dictionary WHERE latvianWord = ?");
+            stmt.setString(1, latvianWord);
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                return  resultSet.getString("englishWord");
             } else {
                 return "No words found";
             }
